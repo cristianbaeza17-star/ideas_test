@@ -1,0 +1,5 @@
+{
+  "name": "Supabase Idea Board",
+  "description": "A modern web application where users can log in to save and view their ideas. It uses Supabase for authentication and database storage, with a sleek UI built with React and Tailwind CSS.",
+  "requestFramePermissions": []
+}

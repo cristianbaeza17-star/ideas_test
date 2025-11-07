@@ -1,14 +1,22 @@
+// Fix: Added a triple-slash directive to include Vite's client types. This is necessary for TypeScript to recognize `import.meta.env` and prevent type errors.
+/// <reference types="vite/client" />
 
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '../types';
 
-// IMPORTANT: 
-// 1. Create a new project at https://supabase.com/
-// 2. Go to your project's "Project Settings" > "API"
-// 3. Find your "Project URL" and "Project API Keys" (use the anon, public one)
-// 4. Paste them here.
-const supabaseUrl = process.env.SUPABASE_URL || 'https://fjddlslynjxoesahiiux.supabase.co'; 
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqZGRsc2x5bmp4b2VzYWhpaXV4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI0OTY1MzksImV4cCI6MjA3ODA3MjUzOX0.4QPdcHByRjXmgjqRNqqu0VHPHMDvJQ0HNTbyxYKzdhY';
+// IMPORTANTE: Variables de Entorno para Vite
+// 1. Crea un archivo llamado .env en la raíz de tu proyecto.
+// 2. Añade tus credenciales de Supabase al archivo .env de esta forma:
+//    VITE_SUPABASE_URL=TU_URL_DE_SUPABASE
+//    VITE_SUPABASE_ANON_KEY=TU_LLAVE_ANON_DE_SUPABASE
+// 3. Vercel: Configura estas variables de entorno en los ajustes de tu proyecto en el panel de Vercel.
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL; 
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Supabase URL and Anon Key are required. Make sure to set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file or deployment environment.");
+}
+
 
 // In your Supabase project, run this SQL to create the 'ideas' table:
 /*
